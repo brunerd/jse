@@ -3,7 +3,7 @@ JSON String Encoder for scripters
 
 Properly encode arbitrary input into JSON strings.
 
-Use in conjunction with [jpt](https://guthub.com/brunerd/jpt) to _quickly_ encode multiple user input into JSON strings that can be written en masse with a JSONPatch document.
+Use in conjunction with [jpt](https://guthub.com/brunerd/jpt) to _quickly_ encode strings into JSON strings that can be written en masse with a JSONPatch document.
 
 ## Usage:
 ```
