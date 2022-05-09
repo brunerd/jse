@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
 #!/usr/bin/env zsh
+#!/usr/bin/env bash
 #choose your shell with the first line, works in either
 
 : <<-LICENSE_BLOCK
