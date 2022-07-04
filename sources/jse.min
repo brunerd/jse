@@ -9,10 +9,10 @@ LICENSE_BLOCK
 
 #v1.0.1 - copy the function below to embed jse into your shell scripts
 function jse () (
-	read -r -d '' JSCode <<-'EOT'
-	var argument=decodeURIComponent(escape(arguments[0]));var fileFlag=decodeURIComponent(escape(arguments[1]));if(fileFlag){try{vartext=readFile(argument)} catch(error){throw new Error(error);quit()};if(argument==="/dev/stdin"){text=text.slice(0,-1)}}else{var text=argument};print(JSON.stringify(text,null,0))
-	EOT
-	jsc=$(find "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/" -name 'jsc');[ -z "${jsc}" ] && jsc=$(which jsc);if ([ -n "${ARGC}" ] && [ "${ARGC}" = "0" ]) || ([ -z "${ARGC}" ] && [ "${#BASH_ARGC[@]}" = "0" ]); then if [ -f '/dev/stdin' ]; then fileFlag=1; argument="/dev/stdin"; elif [ -t '0' ]; then echo -e "jse (v1.0.1) - JSON String Encoder (https://github.com/brunerd/jse)\nUsage: jse [-f] [argument]\n  [-f] file flag to treat argument as a filepath\n  [argument] convert string or contents of filepath to JSON string\n  Input can also be via file redirection, piped input, here doc, or here string" >/dev/stderr; exit 0; fi; elif [ "${1}" = "-f" ] && [ -n "${2}" ]; then if [ ! -f "${2}" ]; then echo "File not found: ${2}";exit 1; else fileFlag=1; argument="${2}"; fi; else argument="${1}"; fi; if [ -z "${argument}" ] && [ ! -t '0' ]; then "${jsc}" -e "${JSCode}" -- "/dev/stdin" "1" <<< "$(cat)"; else "${jsc}" -e "${JSCode}" -- "${argument}" "${fileFlag}"; fi	
+read -r -d '' JSCode <<-'EOT'
+var argument=decodeURIComponent(escape(arguments[0]));var fileFlag=decodeURIComponent(escape(arguments[1]));if(fileFlag){try{vartext=readFile(argument)} catch(error){throw new Error(error);quit()};if(argument==="/dev/stdin"){text=text.slice(0,-1)}}else{var text=argument};print(JSON.stringify(text,null,0))
+EOT
+jsc=$(find "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/" -name 'jsc');[ -z "${jsc}" ] && jsc=$(which jsc);if ([ -n "${ARGC}" ] && [ "${ARGC}" = "0" ]) || ([ -z "${ARGC}" ] && [ "${#BASH_ARGC[@]}" = "0" ]); then if [ -f '/dev/stdin' ]; then fileFlag=1; argument="/dev/stdin"; elif [ -t '0' ]; then echo -e "jse (v1.0.1) - JSON String Encoder (https://github.com/brunerd/jse)\nUsage: jse [-f] [argument]\n  [-f] file flag to treat argument as a filepath\n  [argument] convert string or contents of filepath to JSON string\n  Input can also be via file redirection, piped input, here doc, or here string" >/dev/stderr; exit 0; fi; elif [ "${1}" = "-f" ] && [ -n "${2}" ]; then if [ ! -f "${2}" ]; then echo "File not found: ${2}";exit 1; else fileFlag=1; argument="${2}"; fi; else argument="${1}"; fi; if [ -z "${argument}" ] && [ ! -t '0' ]; then "${jsc}" -e "${JSCode}" -- "/dev/stdin" "1" <<< "$(cat)"; else "${jsc}" -e "${JSCode}" -- "${argument}" "${fileFlag}"; fi	
 )
 
 jse "$@" 
