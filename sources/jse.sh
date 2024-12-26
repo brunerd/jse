@@ -6,10 +6,10 @@
 jse - JSON String Encoder (https://github.com/brunerd/jse) Copyright (c) 2024 Joel Bruner (https://github.com/brunerd)
 Licensed under the MIT License. Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 LICENSE_BLOCK
-#set -x
 
 #copy the function below to embed jse into your shell scripts, jse.min a minified version is also available
 function jse()(
+	{ set +x; } &> /dev/null
 	helpText='jse (v1.1) - JSON String Encoder (https://github.com/brunerd/jse)\nUsage: jse [-u] [-f] [argument]\n  -f file flag, treat argument as a filepath\n  -u encode Unicode characters with \\u escaping\n  argument – string or filepath to encode as JSON string\n  Input can also be via file redirection, piped input, here doc, or here string'
 	read -r -d '' JSCode <<-'EOT'
 		//escape and decode needed to avoid emoji mangling
