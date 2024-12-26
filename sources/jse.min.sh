@@ -10,7 +10,7 @@ LICENSE_BLOCK
 #copy the function below to embed jse into your shell scripts
 ## jse function begin ##
 function jse()(
-helpText='jse (v1.1) - JSON String Encoder (https://github.com/brunerd/jse)\nUsage: jse [-u] [-f] [argument]\n  -f file flag, treat argument as a filepath\n  -u encode Unicode characters with \\u escaping\n  argument – string or filepath to encode as JSON string\n  Input can also be via file redirection, piped input, here doc, or here string'
+{ set +x; } &> /dev/null;helpText='jse (v1.1) - JSON String Encoder (https://github.com/brunerd/jse)\nUsage: jse [-u] [-f] [argument]\n  -f file flag, treat argument as a filepath\n  -u encode Unicode characters with \\u escaping\n  argument – string or filepath to encode as JSON string\n  Input can also be via file redirection, piped input, here doc, or here string'
 read -r -d '' JSCode <<-'EOT'
 var argument=decodeURIComponent(escape(arguments[0]));var optionsArg = arguments[1] || '{}';var option = {};for (var i=0; i < optionsArg.length; i++) {switch (optionsArg.charAt(i)) { default: option[optionsArg.charAt(i)]=true; break; }};if (option.f) {try { var text = readFile(argument) } catch(error) { throw new Error(error); quit();};if (argument === "/dev/stdin") { text = text.slice(0,-1) }}else {var text=argument};print(JSON.stringify(text,null,0).replace((option.u ? /[\u0000-\u001f\u007f-\uffff]/g : /\u007f/g), function(chr) { return "\\u" + ("0000" + chr.charCodeAt(0).toString(16)).slice(-4)}))
 EOT
