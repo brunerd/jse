@@ -8,21 +8,27 @@ Use in conjunction with [jpt](https://guthub.com/brunerd/jpt) to _quickly_ encod
 ## Usage:
 ```
 % jse
-Usage: jse [-f] [argument]
-  [-f] file flag to treat argument as a filepath
-  [argument] convert string or contents of filepath to JSON string
+jse (v1.1) - JSON String Encoder (https://github.com/brunerd/jse)
+Usage: jse [-u] [-f] [argument]
+  -f file flag, treat argument as a filepath
+  -u encode Unicode characters with \u escaping
+  argument – string or filepath to encode as JSON string
   Input can also be via file redirection, piped input, here doc, or here string
 ```
 
 ## Examples:
 ```
 #input as a parameter
-% jse 'Wow "cool"' 
-"Wow \"cool\""
+% jse 'Wow "cool" 😎' 
+"Wow \"cool\" 😎"
+
+#same with -u to escape unicode above 0x7e
+% jse -u 'Wow "cool" 😎' 
+"Wow \"cool\" \ud83d\ude0e"
 
 #input via pipe
-% echo 'Totally "rad"' | jse   
-"Totally \"rad\""
+% echo 'Totally "rad" 🤙' | jse   
+"Totally \"rad\" 🤙"
 
 #input as a here doc
 % jse <<EOT
@@ -44,4 +50,4 @@ EOT
 * Max output is 720MB
 
 ### Installation
-A macOS pkg is available in [Releases](https://github.com/brunerd/jse/releases) it will install both the commented `jse` and the minified version `jse.min` into `/usr/local/jse` and create a symlink to `jse` in `/usr/local/bin`.
+A macOS pkg is available in [Releases](https://github.com/brunerd/jse/releases) it will install both the commented `jse.sh` and the minified version `jse.min.sh` into `/usr/local/jse` and create the symlink `jse` in `/usr/local/bin`.
